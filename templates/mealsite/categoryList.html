@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+
+{% block main %}
+<div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 col-12 mx-auto mt-3">
+                <h1>{{ category|upper }}</h1>
+                <div class="row justify-content-end text-center undrline mt-4">
+                    <h3 class="px-2 col-md-2 col"><a href="{% url 'meal:mealList' category %}?q=rating">Rating</a></h3>
+                    <h3 class="px-2 col-md-2 col"><a href="{% url 'meal:mealList' category %}?q=date">Date</a></h3>
+                    <h3 class="px-2 col-md-2 col"><a href="{% url 'meal:mealList' category %}?q=country">Country</a></h3>
+                </div>
+
+                <div class="row">
+                    {% for meal in meals %}
+                        <div class="shadow mt-3">
+                        <a href="{% url 'meal:mealDetail' meal.id %}">
+                            <div class="row">
+                                <div class="col-md-3 px-md-0 col-12">
+                                    <img src="{{ meal.imageUrl }}" class="w-100" alt="...">
+                                </div>
+                            <div class="col-md-9 p-3 col-12">
+                                <h3>{{ meal.name }} <span class="h5">({{ meal.countryOfOrigin }})</span></h3>
+                            <div class="d-flex justify-content-start">
+                                  <div class="px-2 align-middle">
+                                      <h5 class="mt-3">{{ meal.getAvgRating|floatformat }} ({{ meal.numberOfVotes }})</h5>
+                                  </div>
+                            </div>
+                            <div class="text-start text-truncate">
+                                {{ meal.description }}
+                            </div>
+                            </div>
+                            </div>
+                        </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+</div>
+
+{% endblock %}

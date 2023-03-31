@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block main %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 col-12 mx-auto">
+            <div class="d-flex">
+                <h1>{{ meal.name }}</h1>
+                <div class="px-3 d-flex">
+                    <div class="px-2 align-middle">
+                        <h4 class="mt-3">{{ meal.getAvgRating|floatformat }} ({{ meal.numberOfVotes }})</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 row justify-content-center">
+                <div class="col-md-6 col-12">
+                    <img class="w-100" src="{{ meal.imageUrl }}" alt="Meal img">
+                    <div class="mt-3 text-start" style="word-wrap: break-word;">
+                        {{ meal.description|linebreaksbr }}
+                        <!-- <p class="mt-3 text-start text-wrap">{{ meal.description|linebreaksbr }}</p> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-8 mx-auto">
+
+                    <h3 class="mt-3">Rating</h3>
+                    <div>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="d-flex justify-content-around">
+                                <h5 class="">{{ form.rating }}　<span id="rating-display" class="h2 pl-3">3</span></h5>
+
+                                <div>
+                                    <button type="submit" class="btn btn-primary">Vote</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'assets/js/rating.js' %}"></script>
+{% endblock extrajs %}
